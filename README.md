@@ -52,20 +52,23 @@ To run this project, ensure you have the following installed:
 
 ## Setup Instructions
 1- Clone the Repository
-git clone https://github.com/manar-hadhoud/uber_fare_adjusment-DS.git
-cd uber_fare_adjusment-DS
+
+- git clone https://github.com/manar-hadhoud/uber_fare_adjusment-DS.git
+- cd uber_fare_adjusment-DS
 
 2- Extract the files
-unzip DATA_ANALYSIS/uber_DA.zip -d DATA_ANALYSIS/ (for eg..)
-unzip MODEL_TRAIN/uber.zip -d MODEL_TRAIN/
+
+- unzip DATA_ANALYSIS/uber_DA.zip -d DATA_ANALYSIS/ (for eg..)
+- unzip MODEL_TRAIN/uber.zip -d MODEL_TRAIN/
 
 3- run steps
-cd react_ui/uber-fare-ui/
-npm install
-npm start
+- cd react_ui/uber-fare-ui/
+- npm install
+- npm start
 
 use endpoint in main.py to run predictions
-**see demo video of running interface**
+
+***see demo video of running interface***
 
 ---
 ## 1. Data Preparation and Cleansing
