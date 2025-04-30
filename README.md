@@ -43,3 +43,125 @@ To run this project, ensure you have the following installed:
 - Required Python libraries:
   ```bash
   pip install pandas numpy matplotlib seaborn scikit-learn xgboost lightgbm
+- Node.js and npm (for the React UI)
+- Jupyter Notebook or Google Colab (for .ipynb files)
+- A web browser to view the React UI (http://localhost:3000)
+
+
+---
+
+## Setup Instructions
+1- Clone the Repository
+git clone https://github.com/manar-hadhoud/uber_fare_adjusment-DS.git
+cd uber_fare_adjusment-DS
+
+2- Extract the files
+unzip DATA_ANALYSIS/uber_DA.zip -d DATA_ANALYSIS/ (for eg..)
+unzip MODEL_TRAIN/uber.zip -d MODEL_TRAIN/
+
+3- run steps
+cd react_ui/uber-fare-ui/
+npm install
+npm start
+
+use endpoint in main.py to run predictions
+**see demo video of running interface**
+
+---
+## 1. Data Preparation and Cleansing
+
+**Dataset:** `uber.csv` with **193,708** records  
+**Columns:**  
+- `fare_amount`  
+- `pickup_datetime`  
+- `pickup_longitude`  
+- `pickup_latitude`  
+- `dropoff_longitude`  
+- `dropoff_latitude`  
+- `passenger_count`
+
+**Steps** *(refer to `uber_analysis.ipynb` & `Uber.ipynb`)*:
+- Loaded the dataset
+- Removed unnecessary columns: `Unnamed: 0`, `key`
+- Dropped rows with `NaN` values
+- Removed invalid entries (e.g., `fare_amount <= 0`)
+- Filtered coordinates to be in land only
+  
+
+---
+
+## 2. Feature Engineering
+
+**Extracted from `pickup_datetime`:**
+- `hour`
+- `minute`
+- `pickup_dayofweek`
+- `pickup_month`
+- `pickup_year`
+- `is_weekend`
+- `time_period` (Morning, Afternoon, Evening, Night)
+
+**Additional Features:**
+- **Trip distance:** using Haversine and Manhattan formulas
+- **Bearing:** directional feature
+- **suspected_coordinate:** flag for invalid/mistaken coordinates
+
+---
+
+## 3. Exploratory Data Analysis (EDA)
+
+**Visualizations:**
+- **Histogram:** fare distribution ($6–$12.50)
+- **Line plots:** time-of-day & year-based trends
+- **Scatter plot:** fare vs distance (correlation ~0.6)  
+*(Visuals saved in `plots/`)*
+
+**Key Insights:**
+- Fares peak during rush hours and weekends
+- Distance is the most influential feature (positive correlation)
+- Typical fare range: **$6 – $12.50**
+- Peaks observed during **rush hours** and **weekends**
+- Strong correlation (~0.6) between **distance** and **fare**
+
+
+----> ***all insights in DA_report.docx with recommendations.***
+
+---
+
+## 4. Model Training and Evaluation
+
+**Train/Test Split:** 80% / 20%
+
+**Preprocessing:**
+- Dropped: `manhattan_distance_km`, `is_weekend`
+- Encoded: `time_period` numerically
+
+**Models Used:**
+- Linear Regression
+- Random Forest Regressor
+- Gradient Boosting Regressor
+- XGBoost
+- **LightGBM** *(Best performance)*
+
+**Hyperparameter Tuning:**
+- Used `RandomizedSearchCV` for **XGBoost** & **LightGBM**
+
+**Evaluation Metrics:**
+- Mean Squared Error (MSE)
+- Mean Absolute Error (MAE)
+- R² Score
+
+**Saved Models:**
+- `best_lgb_model.pkl`
+- `scaler.pkl`
+- `model_features.pkl`
+
+---
+
+## Results
+
+### Model Performance:
+- **LightGBM** outperformed other models after tuning
+- High alignment between **predicted** and **actual fares** with r-score = 89.72% on test data
+
+---
